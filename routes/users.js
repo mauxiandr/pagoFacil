@@ -139,7 +139,6 @@ router.put('/activar/:id', function(req, res, next) {
 		}
 		client.end();
 	});
-  // res.send(updateQuery);
 });
 
 module.exports = router;
