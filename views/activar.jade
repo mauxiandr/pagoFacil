@@ -1,0 +1,7 @@
+extends layout
+
+block content
+	p inserte comisión
+	form(action='/usuario/activar/',method='POST')
+		input(id='comision',type='text',value='',placeholder='0.1')
+		button(type='submit') Activar

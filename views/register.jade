@@ -1,0 +1,17 @@
+extends layout
+
+block content
+	p Registro de usuario
+	form(action='/usuario/registrar',method='POST')
+		input(id='name',type='text',value='',placeholder='nombre')
+		input(id='apellido',type='text',value='',placeholder='apellido')
+		input(id='docIdentidad',type='text',value='',placeholder='0.1')
+		select(id='tipoDoc',value='')
+		input(id='email',type='text',value='',placeholder='email')
+		input(id='password',type='text',value='',placeholder='password')
+		input(id='DOB',type='text',value='',placeholder='DOB')
+		input(id='banco',type='text',value='',placeholder='banco')
+		input(id='tipoCuenta',type='text',value='',placeholder='tipo de cuenta')
+		input(id='email',type='text',value='',placeholder='email bancario')
+
+		button(type='submit') Activar
