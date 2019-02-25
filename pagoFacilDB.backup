@@ -1,0 +1,266 @@
+--
+-- PostgreSQL database dump
+--
+
+-- Dumped from database version 9.1.13
+-- Dumped by pg_dump version 9.5.1
+
+-- Started on 2019-02-24 23:47:19
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SET check_function_bodies = false;
+SET client_min_messages = warning;
+SET row_security = off;
+
+--
+-- TOC entry 1 (class 3079 OID 11639)
+-- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: 
+--
+
+CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
+
+
+--
+-- TOC entry 1880 (class 0 OID 0)
+-- Dependencies: 1
+-- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner: 
+--
+
+COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
+
+
+SET search_path = public, pg_catalog;
+
+SET default_tablespace = '';
+
+SET default_with_oids = false;
+
+--
+-- TOC entry 165 (class 1259 OID 17551)
+-- Name: transacciones; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE transacciones (
+    id integer NOT NULL,
+    monto numeric NOT NULL,
+    tipo_moneda character varying(10),
+    detalle character varying(255),
+    comercio character varying(55) NOT NULL,
+    fecha_transaccion date NOT NULL,
+    pagada character(1),
+    id_trx character varying NOT NULL,
+    id_ref character varying
+);
+
+
+ALTER TABLE transacciones OWNER TO postgres;
+
+--
+-- TOC entry 164 (class 1259 OID 17549)
+-- Name: transacciones_idTrx_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE "transacciones_idTrx_seq"
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE "transacciones_idTrx_seq" OWNER TO postgres;
+
+--
+-- TOC entry 1881 (class 0 OID 0)
+-- Dependencies: 164
+-- Name: transacciones_idTrx_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE "transacciones_idTrx_seq" OWNED BY transacciones.id;
+
+
+--
+-- TOC entry 162 (class 1259 OID 17512)
+-- Name: usuarios; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE usuarios (
+    nombre character varying(55) NOT NULL,
+    apellido character varying(55) NOT NULL,
+    documento_identidad character varying(15) NOT NULL,
+    tipo_documento character varying NOT NULL,
+    email character varying NOT NULL,
+    password character varying NOT NULL,
+    sexo character(1),
+    nombre_banco character varying,
+    numero_cuenta integer,
+    id integer NOT NULL,
+    tipo_cuenta character varying,
+    comision numeric,
+    estado character(10),
+    email_banco character varying,
+    fecha_nacimiento character varying NOT NULL,
+    id_usuario character varying NOT NULL
+);
+
+
+ALTER TABLE usuarios OWNER TO postgres;
+
+--
+-- TOC entry 163 (class 1259 OID 17538)
+-- Name: usuario_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE usuario_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE usuario_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 1882 (class 0 OID 0)
+-- Dependencies: 163
+-- Name: usuario_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE usuario_id_seq OWNED BY usuarios.id;
+
+
+--
+-- TOC entry 1756 (class 2604 OID 17554)
+-- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY transacciones ALTER COLUMN id SET DEFAULT nextval('"transacciones_idTrx_seq"'::regclass);
+
+
+--
+-- TOC entry 1755 (class 2604 OID 17540)
+-- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY usuarios ALTER COLUMN id SET DEFAULT nextval('usuario_id_seq'::regclass);
+
+
+--
+-- TOC entry 1872 (class 0 OID 17551)
+-- Dependencies: 165
+-- Data for Name: transacciones; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY transacciones (id, monto, tipo_moneda, detalle, comercio, fecha_transaccion, pagada, id_trx, id_ref) FROM stdin;
+1	10000	CLP	pago plan entel	Entel	2019-02-22	Y	28018201-4	7329392hfd32
+2	3500	CLP	pago agua	Aguas Andinas	2019-02-20	N	7930729302-5	7329392hfd32
+4	10000	CLP	PAGO PLAN ENTL	ENTEL	2019-01-21	Y	793203-4	7329392hfd32
+3	25000	CLP	transferencia Vzla	Giros Vzla	2019-01-31	Y	7390273-4	7329392hfd32
+\.
+
+
+--
+-- TOC entry 1883 (class 0 OID 0)
+-- Dependencies: 164
+-- Name: transacciones_idTrx_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('"transacciones_idTrx_seq"', 10, true);
+
+
+--
+-- TOC entry 1884 (class 0 OID 0)
+-- Dependencies: 163
+-- Name: usuario_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('usuario_id_seq', 28, true);
+
+
+--
+-- TOC entry 1869 (class 0 OID 17512)
+-- Dependencies: 162
+-- Data for Name: usuarios; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY usuarios (nombre, apellido, documento_identidad, tipo_documento, email, password, sexo, nombre_banco, numero_cuenta, id, tipo_cuenta, comision, estado, email_banco, fecha_nacimiento, id_usuario) FROM stdin;
+maria	andrade	20796123	cedula	mauxi.andrade@gmail.com	12345	F	Banco Estado	1111	1	Rut	0.2	PENDIENTE 	mauxi.andrade@banco.com	20031992	7329392hfd32
+\.
+
+
+--
+-- TOC entry 1764 (class 2606 OID 17602)
+-- Name: transacciones_id_trx_key; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY transacciones
+    ADD CONSTRAINT transacciones_id_trx_key UNIQUE (id_trx);
+
+
+--
+-- TOC entry 1766 (class 2606 OID 17556)
+-- Name: transacciones_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY transacciones
+    ADD CONSTRAINT transacciones_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 1758 (class 2606 OID 17548)
+-- Name: usuario_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY usuarios
+    ADD CONSTRAINT usuario_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 1760 (class 2606 OID 17595)
+-- Name: usuarios_id_usuario_key; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY usuarios
+    ADD CONSTRAINT usuarios_id_usuario_key UNIQUE (id_usuario);
+
+
+--
+-- TOC entry 1762 (class 2606 OID 17619)
+-- Name: usuarios_id_usuario_key1; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY usuarios
+    ADD CONSTRAINT usuarios_id_usuario_key1 UNIQUE (id_usuario);
+
+
+--
+-- TOC entry 1767 (class 2606 OID 17613)
+-- Name: transacciones_id_ref_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY transacciones
+    ADD CONSTRAINT transacciones_id_ref_fkey FOREIGN KEY (id_ref) REFERENCES usuarios(id_usuario);
+
+
+--
+-- TOC entry 1879 (class 0 OID 0)
+-- Dependencies: 6
+-- Name: public; Type: ACL; Schema: -; Owner: postgres
+--
+
+REVOKE ALL ON SCHEMA public FROM PUBLIC;
+REVOKE ALL ON SCHEMA public FROM postgres;
+GRANT ALL ON SCHEMA public TO postgres;
+GRANT ALL ON SCHEMA public TO PUBLIC;
+
+
+-- Completed on 2019-02-24 23:47:19
+
+--
+-- PostgreSQL database dump complete
+--
+

@@ -70,7 +70,6 @@ router.put('/pagar/:idTrx', function(req, res, next) {
 		if (err) {
 			return res.send(err);
 		} else {
-			// return res.send(result);
 			var response = {
 				"IdTrx": req.params.idTrx,
 				"Status": "Ok",
