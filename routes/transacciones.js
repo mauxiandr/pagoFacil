@@ -62,4 +62,26 @@ router.post('/registrar',  [
 
 });
 
+/*PUT pagar*/
+router.put('/pagar/:idTrx', function(req, res, next) {
+	var updateQuery = "UPDATE transacciones SET pagada = 'Y' WHERE id_trx = '"+req.params.idTrx+"' returning monto;";
+
+	client.query(updateQuery, [], (err, result) => {
+		if (err) {
+			return res.send(err);
+		} else {
+			// return res.send(result);
+			var response = {
+				"IdTrx": req.params.idTrx,
+				"Status": "Ok",
+				"Monto": result.rows[0].monto
+			};
+			res.send(response);
+    		res.end();
+		}
+		client.end();
+	});
+  // res.send(updateQuery);
+});
+
 module.exports = router;

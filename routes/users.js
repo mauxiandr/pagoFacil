@@ -130,7 +130,9 @@ router.put('/activar/:id', function(req, res, next) {
 			return res.send(err);
 		} else {
 			var response = {
-				"IdUsuario": req.params.id
+				"IdUsuario": req.params.id,
+				"Status": "Ok",
+				"Comision": req.body.Comision
 			};
 			res.send(response);
     		res.end();
