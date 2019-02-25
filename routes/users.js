@@ -122,19 +122,22 @@ router.get('/saldo/:id', function(req, res) {
 });
 
 /*PUT activar usuario*/
-router.get('/activar/:id', function(req, res, next) {
-  res.render('activar');
+router.put('/activar/:id', function(req, res, next) {
+	var updateQuery = "UPDATE usuarios SET estado = 'ACTIVO', comision = "+req.body.Comision+" WHERE id_usuario = '"+req.params.id+"';";
+
+	client.query(updateQuery, [], (err, result) => {
+		if (err) {
+			return res.send(err);
+		} else {
+			var response = {
+				"IdUsuario": req.params.id
+			};
+			res.send(response);
+    		res.end();
+		}
+		client.end();
+	});
+  // res.send(updateQuery);
 });
-
-function handlePut(req, res) {
-    res.send('Activate the user');
-  // code ...
-}
-
-router.post('/activar/:id', handlePut);
-
-
-
-
 
 module.exports = router;

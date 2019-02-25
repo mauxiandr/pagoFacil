@@ -25,13 +25,6 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-
-function handlePut(req, res) {
-    res.send('register the user');
-  // code ...
-}
-
-
 app.use('/', indexRouter);
 app.use('/usuario', usersRouter);
 app.use('/transaccion', transaccionRouter);
